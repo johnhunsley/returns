@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 /**
  * @author John Hunsley
  *         jphunsley@gmail.com
@@ -30,14 +32,14 @@ public class ReturnsController {
                                                                @RequestParam("fishery") final String fishery,
                                                                @RequestParam("page") final int page,
                                                                @RequestParam("size") final int size) {
-        return new ResponseEntity(returnsRepository.pageReturnsByName(
+        return new ResponseEntity(returnsRepository.findReturnsByName(
                 filter, new PageRequest(page - 1, size, Sort.Direction.ASC, "id")), HttpStatus.OK);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/stats", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<ReturnStats> getStats(@RequestParam("toDate") final String toDate,
-                                                @RequestParam("fromDate") final String fromDate,
+    public ResponseEntity<ReturnStats> getStats(@RequestParam("toDate") final Date toDate,
+                                                @RequestParam("fromDate") final Date fromDate,
                                                 @RequestParam("fishery") final String fishery) {
         return new ResponseEntity(HttpStatus.OK);
     }

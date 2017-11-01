@@ -36,6 +36,6 @@ public class ReturnController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
     //@PreAuthorize("hasPermission('serviceProvider', 'SERVICE_PROVIDER')")
     public ResponseEntity<Return> getReturnById(@PathVariable("id") final long id) {
-        return new ResponseEntity<Return>(returnsRepository.getOne(id), HttpStatus.OK);
+        return new ResponseEntity<>(returnsRepository.getOne(id), HttpStatus.OK);
     }
 }

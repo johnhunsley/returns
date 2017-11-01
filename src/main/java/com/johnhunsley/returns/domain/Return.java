@@ -2,10 +2,10 @@ package com.johnhunsley.returns.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import org.springframework.data.annotation.Id;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -20,41 +20,52 @@ import java.util.Set;
         include = JsonTypeInfo.As.PROPERTY,
         property = "class")
 @Entity
+@Table(name = "RETURNS", catalog = "lymmac", schema = "")
 public class Return implements Serializable {
     private static final long serialVersionUID = 100L;
 
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column
+    @Basic
+    @Column(name = "FISHERY")
     private String fishery;
 
-    @Column
+    @Basic
+    @Column(name = "MEMBER_ID")
     private String memberId;
 
-    @Column
+    @Basic
+    @Column(name = "MEMBER_NAME")
     private String name;
 
-    @Column
+    @Basic
+    @Column(name = "DATE_FROM")
     private Date from;
 
-    @Column
+    @Basic
+    @Column(name = "HOUR_FROM")
     private int fromhh;
 
-    @Column
+    @Basic
+    @Column(name = "MIN_FROM")
     private int frommm;
 
-    @Column
+    @Basic
+    @Column(name = "DATE_TO")
     private Date to;
 
-    @Column
+    @Basic
+    @Column(name = "HOUR_TO")
     private int tohh;
 
-    @Column
+    @Basic
+    @Column(name = "MIN_TO")
     private int tomm;
 
-    @OneToMany(mappedBy = "aReturn", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "aReturn", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Catch> catches;
 
     public Long getId() {
@@ -139,6 +150,13 @@ public class Return implements Serializable {
 
     public void setCatches(Set<Catch> catches) {
         this.catches = catches;
+    }
+
+    public void addCatch(Catch myCatch) {
+        if(this.catches == null) this.catches = new HashSet<>();
+
+        this.catches.add(myCatch);
+        myCatch.setaReturn(this);
     }
 
     @Override

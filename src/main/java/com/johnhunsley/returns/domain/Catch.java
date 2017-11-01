@@ -2,7 +2,6 @@ package com.johnhunsley.returns.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,27 +17,34 @@ import java.io.Serializable;
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
         property = "class")
+@Entity
+@Table(name = "CATCHES", catalog = "lymmac", schema = "")
 public class Catch implements Serializable {
     private static final long serialVersionUID = 100L;
 
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column
+    @Basic
+    @Column(name = "SPECIES")
     private String species;
 
-    @Column
+    @Basic
+    @Column(name = "CATCH_COUNT")
     private int count;
 
-    @Column
+    @Basic
+    @Column(name = "AVG_POUNDS")
     private int pounds;
 
-    @Column
+    @Basic
+    @Column(name = "AVG_OUNCES")
     private int ounces;
 
     @ManyToOne
-    @JoinColumn(name = "return_id")
+    @JoinColumn(name = "RETURN_ID")
     private Return aReturn;
 
     public Long getId() {

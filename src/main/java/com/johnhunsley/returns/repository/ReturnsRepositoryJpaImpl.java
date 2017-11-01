@@ -15,7 +15,6 @@ import java.util.List;
  * @author John Hunsley
  *         jphunsley@gmail.com
  *         Date : 30/10/2017
- *         Time : 11:12
  */
 @Repository("returnsRepository")
 public interface ReturnsRepositoryJpaImpl extends JpaRepository<Return, Long> {

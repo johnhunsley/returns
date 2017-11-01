@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author John Hunsley
  *         jphunsley@gmail.com
  *         Date : 29/08/2017
- *         Time : 12:50
  */
 @RestController
 @RequestMapping("app/ping/")

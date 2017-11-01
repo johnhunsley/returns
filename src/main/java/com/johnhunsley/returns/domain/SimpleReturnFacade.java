@@ -13,7 +13,6 @@ import java.io.Serializable;
  * @author John Hunsley
  *         jphunsley@gmail.com
  *         Date : 27/10/2017
- *         Time : 14:56
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonTypeInfo(

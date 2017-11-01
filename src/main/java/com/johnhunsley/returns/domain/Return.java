@@ -12,7 +12,6 @@ import java.util.Set;
  * @author John Hunsley
  *         jphunsley@gmail.com
  *         Date : 27/10/2017
- *         Time : 14:54
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonTypeInfo(

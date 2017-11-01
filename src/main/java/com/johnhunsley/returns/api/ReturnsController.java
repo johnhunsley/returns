@@ -18,7 +18,6 @@ import java.util.Date;
  * @author John Hunsley
  *         jphunsley@gmail.com
  *         Date : 27/10/2017
- *         Time : 14:52
  */
 @RestController
 @RequestMapping("app/returns")

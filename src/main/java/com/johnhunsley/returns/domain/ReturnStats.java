@@ -10,7 +10,6 @@ import java.util.Map;
  * @author John Hunsley
  *         jphunsley@gmail.com
  *         Date : 27/10/2017
- *         Time : 15:06
  */
 public class ReturnStats {
     private Map<String, Integer> catchStats;

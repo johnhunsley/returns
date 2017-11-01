@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
  * @author John Hunsley
  *         jphunsley@gmail.com
  *         Date : 27/10/2017
- *         Time : 15:07
  */
 @RestController
 @RequestMapping("app/return")

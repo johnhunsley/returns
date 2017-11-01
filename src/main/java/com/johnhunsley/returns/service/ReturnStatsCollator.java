@@ -12,7 +12,6 @@ import java.util.List;
  * @author John Hunsley
  *         jphunsley@gmail.com
  *         Date : 01/11/2017
- *         Time : 16:07
  */
 @Service("returnStatsCollator")
 public class ReturnStatsCollator {

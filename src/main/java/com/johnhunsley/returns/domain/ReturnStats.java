@@ -1,5 +1,8 @@
 package com.johnhunsley.returns.domain;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * <p>
  *     representation of multiple different statistics for
@@ -10,4 +13,19 @@ package com.johnhunsley.returns.domain;
  *         Time : 15:06
  */
 public class ReturnStats {
+    private Map<String, Integer> catchStats;
+
+    public Map<String, Integer> getCatchStats() {
+        return catchStats;
+    }
+
+    public void setCatchStats(Map<String, Integer> catchStats) {
+        this.catchStats = catchStats;
+    }
+
+    public void addStat(final String type, Integer count) {
+        if(this.catchStats == null) this.catchStats = new HashMap<>();
+
+        this.catchStats.put(type, count);
+    }
 }

@@ -3,6 +3,7 @@ package com.johnhunsley.returns.api;
 import com.johnhunsley.returns.domain.ReturnStats;
 import com.johnhunsley.returns.domain.SimpleReturnFacade;
 import com.johnhunsley.returns.repository.ReturnsRepositoryJpaImpl;
+import com.johnhunsley.returns.service.ReturnStatsCollator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +27,9 @@ public class ReturnsController {
     @Autowired
     private ReturnsRepositoryJpaImpl returnsRepository;
 
+    @Autowired
+    private ReturnStatsCollator returnStatsCollator;
+
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<Page<SimpleReturnFacade>> pageReturns(@RequestParam("filter") final String filter,
@@ -41,7 +45,7 @@ public class ReturnsController {
     public ResponseEntity<ReturnStats> getStats(@RequestParam("toDate") final Date toDate,
                                                 @RequestParam("fromDate") final Date fromDate,
                                                 @RequestParam("fishery") final String fishery) {
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(returnStatsCollator.collateStats(fromDate, toDate, fishery), HttpStatus.OK);
     }
 
 

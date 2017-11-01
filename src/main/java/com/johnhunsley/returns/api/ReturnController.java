@@ -6,6 +6,7 @@ import com.johnhunsley.returns.repository.ReturnsRepositoryJpaImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,7 @@ public class ReturnController {
 
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
-    //@PreAuthorize("hasPermission('serviceProvider', 'SERVICE_PROVIDER')")
+    @PreAuthorize("hasPermission('serviceProvider', 'SERVICE_PROVIDER')")
     public ResponseEntity<Return> getReturnById(@PathVariable("id") final long id) {
         return new ResponseEntity<>(returnsRepository.getOne(id), HttpStatus.OK);
     }

@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -30,6 +31,7 @@ public class ReturnsController {
     private ReturnStatsCollator returnStatsCollator;
 
     @CrossOrigin
+    @PreAuthorize("hasPermission('serviceProvider', 'SERVICE_PROVIDER')")
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<Page<SimpleReturnFacade>> pageReturns(@RequestParam("filter") final String filter,
                                                                @RequestParam("fishery") final String fishery,
@@ -40,6 +42,7 @@ public class ReturnsController {
     }
 
     @CrossOrigin
+    @PreAuthorize("hasPermission('serviceProvider', 'SERVICE_PROVIDER')")
     @RequestMapping(value = "/stats", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ReturnStats> getStats(@RequestParam("toDate") final Date toDate,
                                                 @RequestParam("fromDate") final Date fromDate,

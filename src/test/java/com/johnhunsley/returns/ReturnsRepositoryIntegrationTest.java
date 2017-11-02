@@ -11,10 +11,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -29,11 +32,9 @@ import static org.junit.Assert.assertTrue;
  *         Date : 30/10/2017
  *         Time : 16:30
  */
+@SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
-@Configuration
-@EnableJpaRepositories(basePackages = "com.johnhunsley.returns.repository")
-@EnableTransactionManagement
-@EnableAutoConfiguration
+@TestPropertySource("classpath:application-int.properties")
 public class ReturnsRepositoryIntegrationTest {
 
     @Autowired

@@ -1,5 +1,6 @@
 package com.johnhunsley.returns.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -42,6 +43,7 @@ public class Catch implements Serializable {
     @Column(name = "AVG_OUNCES")
     private int ounces;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "RETURN_ID")
     private Return aReturn;

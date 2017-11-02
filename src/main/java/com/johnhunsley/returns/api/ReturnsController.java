@@ -1,7 +1,7 @@
 package com.johnhunsley.returns.api;
 
+import com.johnhunsley.returns.domain.Return;
 import com.johnhunsley.returns.domain.ReturnStats;
-import com.johnhunsley.returns.domain.SimpleReturnFacade;
 import com.johnhunsley.returns.repository.ReturnsRepositoryJpaImpl;
 import com.johnhunsley.returns.service.ReturnStatsCollator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +31,9 @@ public class ReturnsController {
     private ReturnStatsCollator returnStatsCollator;
 
     @CrossOrigin
-    @PreAuthorize("hasPermission('serviceProvider', 'SERVICE_PROVIDER')")
+//    @PreAuthorize("hasPermission('serviceProvider', 'SERVICE_PROVIDER')")
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<Page<SimpleReturnFacade>> pageReturns(@RequestParam("filter") final String filter,
+    public ResponseEntity<Page<Return>> pageReturns(@RequestParam("filter") final String filter,
                                                                @RequestParam("fishery") final String fishery,
                                                                @RequestParam("page") final int page,
                                                                @RequestParam("size") final int size) {
@@ -42,7 +42,7 @@ public class ReturnsController {
     }
 
     @CrossOrigin
-    @PreAuthorize("hasPermission('serviceProvider', 'SERVICE_PROVIDER')")
+//    @PreAuthorize("hasPermission('serviceProvider', 'SERVICE_PROVIDER')")
     @RequestMapping(value = "/stats", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ReturnStats> getStats(@RequestParam("toDate") final Date toDate,
                                                 @RequestParam("fromDate") final Date fromDate,

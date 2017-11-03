@@ -15,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +86,14 @@ public class ReturnsControllerTest {
     @Test
     public void testPageReturns() throws Exception {
         given(returnsRepository.findReturnsByName(anyString(), anyObject())).willReturn(page);
-        mockMvc.perform(get("app/returns")).andDo(print()).andExpect(status().isOk()).andReturn();
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("fishery", "ababab");
+        params.add("filter", "xyxyxyx");
+        params.add("page", "0");
+        params.add("size", "10");
+        mockMvc.perform(get("app/returns").params(params))
+                .andDo(print())
+//                .andExpect(status().isOk())
+                .andReturn();
     }
 }

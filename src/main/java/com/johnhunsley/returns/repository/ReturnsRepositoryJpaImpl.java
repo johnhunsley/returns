@@ -30,6 +30,6 @@ public interface ReturnsRepositoryJpaImpl extends JpaRepository<Return, Long> {
     @Query("select distinct c.species from Catch c")
     List<String> findDistinctSpecies();
 
-    @Query("select SUM(c.count) from Catch c where c.species = :species and c.aReturn in (select r from Return r where r.from >= :fromdate and r.to <= :todate and r.fishery = :fishery)")
+    @Query("select SUM(c.count) from Catch c where c.species = :species and c.aReturn in (select r from Return r where r.from >= :fromdate and r.to <= :todate and r.fishery = :fishery order by r.from desc)")
     Integer getCatchCountForFisheryAndDateRange(@Param("fromdate") Date from, @Param("todate") Date to, @Param("fishery") String fishery, @Param("species") String species);
 }

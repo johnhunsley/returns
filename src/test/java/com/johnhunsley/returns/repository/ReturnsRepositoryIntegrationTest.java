@@ -2,26 +2,17 @@ package com.johnhunsley.returns.repository;
 
 import com.johnhunsley.returns.domain.Catch;
 import com.johnhunsley.returns.domain.Return;
-import com.johnhunsley.returns.domain.ReturnStats;
-import com.johnhunsley.returns.service.ReturnStatsCollator;
-import com.johnhunsley.returns.repository.ReturnsRepositoryJpaImpl;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.List;
 

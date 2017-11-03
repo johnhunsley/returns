@@ -1,23 +1,29 @@
-package com.johnhunsley.returns;
+package com.johnhunsley.returns.repository;
 
 import com.johnhunsley.returns.domain.Catch;
 import com.johnhunsley.returns.domain.Return;
 import com.johnhunsley.returns.domain.ReturnStats;
-import com.johnhunsley.returns.repository.ReturnsRepositoryJpaImpl;
 import com.johnhunsley.returns.service.ReturnStatsCollator;
+import com.johnhunsley.returns.repository.ReturnsRepositoryJpaImpl;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -25,33 +31,23 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author John Hunsley
  *         jphunsley@gmail.com
- *         Date : 01/11/2017
- *         Time : 16:26
+ *         Date : 30/10/2017
+ *         Time : 16:30
  */
+@SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
-@Configuration
-@EnableJpaRepositories(basePackages = "com.johnhunsley.returns.repository")
-@EnableTransactionManagement
-@EnableAutoConfiguration
-@ComponentScan(basePackages = "com.johnhunsley.returns")
-@ActiveProfiles({"int"})
-@TestPropertySource("classpath:application-int.properties")
-public class ReturnStatsCollatorIntegrationTest {
-    @Autowired
-    private ReturnsRepositoryJpaImpl returnsRepository;
+@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.HSQL)
+public class ReturnsRepositoryIntegrationTest {
 
     @Autowired
-    private ReturnStatsCollator returnStatsCollator;
+    private ReturnsRepositoryJpaImpl returnsRepository;
 
     @Before
     public void testCreateReturn() {
 
         for(int i = 1; i <=10; i++ ) {
             Catch myCatch = new Catch();
-
-            if(i > 5) myCatch.setSpecies("Chub");
-            else myCatch.setSpecies("Barbel");
-
+            myCatch.setSpecies("Barbel");
             myCatch.setPounds(8);
             myCatch.setOunces(3);
             myCatch.setCount(2);
@@ -71,21 +67,36 @@ public class ReturnStatsCollatorIntegrationTest {
             returnsRepository.save(myReturn);
             assertNotNull(myReturn.getId());
             System.out.println("RETURN ID : " + myReturn.getId() +
+                              " CATCH ID : " + myReturn.getCatches().iterator().next().getId());
+        }
+    }
+
+    @Test
+    public void testFindReturnsByName() {
+        Page<Return> result = returnsRepository.findReturnsByName("Huns", new PageRequest(0, 10));
+        assertTrue(result.getContent().size() == 10);
+        for(Return myReturn : result.getContent()) {
+            System.out.println("RETURN ID : " + myReturn.getId() +
                     " CATCH ID : " + myReturn.getCatches().iterator().next().getId());
         }
     }
 
     @Test
-    public void testCollateStats() {
-        ReturnStats stats = returnStatsCollator.collateStats(DateTime.now().minusDays(25).toDate(), DateTime.now().toDate(), "Wroxeter");
-        assertTrue(stats.getCatchStats().keySet().size() == 2);
-        assertTrue(stats.getCatchStats().containsKey("Barbel"));
-        assertTrue(stats.getCatchStats().get("Barbel").equals(10));
-        assertTrue(stats.getCatchStats().containsKey("Chub"));
-        assertTrue(stats.getCatchStats().get("Chub").equals(10));
-
-        for(String type: stats.getCatchStats().keySet()) {
-            System.out.println(type + ": "+stats.getCatchStats().get(type));
-        }
+    public void testFailFindReturnsByName() {
+        Page<Return> result = returnsRepository.findReturnsByName("chump", new PageRequest(0, 10));
+        assertTrue(result.getContent().isEmpty());
     }
+
+    @Test
+    public void testFindDistinctSpecies() {
+        List<String> species = returnsRepository.findDistinctSpecies();
+        species.forEach(System.out::println);
+    }
+
+    @Test
+    public void testGetCatchCountForFisheryAndDateRange() {
+        Integer count = returnsRepository.getCatchCountForFisheryAndDateRange(DateTime.now().minusDays(25).toDate(), DateTime.now().toDate(), "Wroxeter", "Barbel");
+        System.out.println(count);
+    }
+
 }

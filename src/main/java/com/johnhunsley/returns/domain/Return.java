@@ -1,5 +1,6 @@
 package com.johnhunsley.returns.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import javax.persistence.*;
@@ -42,6 +43,7 @@ public class Return implements Serializable {
 
     @Basic
     @Column(name = "DATE_FROM")
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Europe/London")
     private Date from;
 
     @Basic
@@ -54,6 +56,7 @@ public class Return implements Serializable {
 
     @Basic
     @Column(name = "DATE_TO")
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Europe/London")
     private Date to;
 
     @Basic

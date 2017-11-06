@@ -1,5 +1,6 @@
 package com.johnhunsley.returns.api;
 
+import com.auth0.spring.security.api.authentication.AuthenticationJsonWebToken;
 import com.johnhunsley.returns.domain.Return;
 import com.johnhunsley.returns.domain.ReturnStats;
 import com.johnhunsley.returns.repository.ReturnsRepositoryJpaImpl;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -21,7 +23,7 @@ import java.util.Date;
  *         Date : 27/10/2017
  */
 @RestController
-@RequestMapping("app/returns")
+@RequestMapping("app/returns/")
 public class ReturnsController {
 
     @Autowired
@@ -31,7 +33,6 @@ public class ReturnsController {
     private ReturnStatsCollator returnStatsCollator;
 
     @CrossOrigin
-//    @PreAuthorize("hasPermission('serviceProvider', 'SERVICE_PROVIDER')")
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<Page<Return>> pageReturns(@RequestParam("filter") final String filter,
                                                                @RequestParam("fishery") final String fishery,
@@ -42,8 +43,7 @@ public class ReturnsController {
     }
 
     @CrossOrigin
-//    @PreAuthorize("hasPermission('serviceProvider', 'SERVICE_PROVIDER')")
-    @RequestMapping(value = "/stats", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "stats", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ReturnStats> getStats(@RequestParam("toDate") final Date toDate,
                                                 @RequestParam("fromDate") final Date fromDate,
                                                 @RequestParam("fishery") final String fishery) {

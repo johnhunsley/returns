@@ -22,12 +22,16 @@ public class ReturnController {
     @Autowired
     private ReturnsRepositoryJpaImpl returnsRepository;
 
+    @Autowired
+    private JwtClaimsDecoder jwtClaimsDecoder;
+
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
-    //@PreAuthorize("hasPermission('serviceProvider', 'SERVICE_PROVIDER')")
-    public ResponseEntity createReturn(@RequestBody Return template) {
+    public ResponseEntity createReturn(@RequestBody Return template) throws Exception {
         AuthenticationJsonWebToken authentication = (AuthenticationJsonWebToken)
                                                         SecurityContextHolder.getContext().getAuthentication();
+        template.setMemberId(jwtClaimsDecoder.resolveMemberId(authentication));
+        template.setName(jwtClaimsDecoder.resolveMemberName(authentication));
         returnsRepository.save(template);
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }

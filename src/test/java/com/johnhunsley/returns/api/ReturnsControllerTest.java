@@ -85,7 +85,7 @@ public class ReturnsControllerTest {
 
     @Test
     public void testPageReturns() throws Exception {
-        given(returnsRepository.findReturnsByName(anyString(), anyObject())).willReturn(page);
+        given(returnsRepository.findReturnsByNameAndFishery(anyString(), anyString(), anyObject())).willReturn(page);
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("fishery", "ababab");
         params.add("filter", "xyxyxyx");

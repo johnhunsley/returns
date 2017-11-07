@@ -53,6 +53,7 @@ public class ReturnsRepositoryIntegrationTest {
             myReturn.setFishery("Wroxeter");
             myReturn.setName("John Hunsley");
             myReturn.setMemberId("PP702");
+            myReturn.setNotes("hi");
             myReturn.addCatch(myCatch);
 
             returnsRepository.save(myReturn);
@@ -64,7 +65,7 @@ public class ReturnsRepositoryIntegrationTest {
 
     @Test
     public void testFindReturnsByName() {
-        Page<Return> result = returnsRepository.findReturnsByName("Huns", new PageRequest(0, 10));
+        Page<Return> result = returnsRepository.findReturnsByNameAndFishery("Huns", "Wroxeter", new PageRequest(0, 10));
         assertTrue(result.getContent().size() == 10);
         for(Return myReturn : result.getContent()) {
             System.out.println("RETURN ID : " + myReturn.getId() +
@@ -74,7 +75,7 @@ public class ReturnsRepositoryIntegrationTest {
 
     @Test
     public void testFailFindReturnsByName() {
-        Page<Return> result = returnsRepository.findReturnsByName("chump", new PageRequest(0, 10));
+        Page<Return> result = returnsRepository.findReturnsByNameAndFishery("chump",  "Wroxeter", new PageRequest(0, 10));
         assertTrue(result.getContent().isEmpty());
     }
 

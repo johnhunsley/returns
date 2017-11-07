@@ -34,12 +34,18 @@ public class ReturnsController {
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<Page<Return>> pageReturns(@RequestParam("filter") final String filter,
+    public ResponseEntity<Page<Return>> pageReturns(@RequestParam("filter") String filter,
                                                                @RequestParam("fishery") final String fishery,
                                                                @RequestParam("page") final int page,
                                                                @RequestParam("size") final int size) {
-        return new ResponseEntity(returnsRepository.findReturnsByName(
-                filter, new PageRequest(page - 1, size, Sort.Direction.ASC, "id")), HttpStatus.OK);
+        if(filter == null || filter.length() < 1) filter = "";
+
+        if(fishery == null || fishery.length() < 1)
+            return new ResponseEntity(returnsRepository.findReturnsByName(
+               filter, new PageRequest(page - 1, size, Sort.Direction.ASC, "id")), HttpStatus.OK);
+
+        else return new ResponseEntity(returnsRepository.findReturnsByNameAndFishery(
+                filter, fishery,  new PageRequest(page - 1, size, Sort.Direction.ASC, "id")), HttpStatus.OK);
     }
 
     @CrossOrigin

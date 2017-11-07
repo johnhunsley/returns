@@ -20,6 +20,9 @@ import java.util.List;
 @Repository("returnsRepository")
 public interface ReturnsRepositoryJpaImpl extends JpaRepository<Return, Long> {
 
+    @Query("select r from Return r where r.name like concat('%',:queryValue,'%') and r.fishery = :fishery")
+    Page<Return> findReturnsByNameAndFishery(@Param("queryValue") String queryValue, @Param("fishery") String fishery, Pageable pageable);
+
     @Query("select r from Return r where r.name like concat('%',:queryValue,'%')")
     Page<Return> findReturnsByName(@Param("queryValue") String queryValue, Pageable pageable);
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -69,7 +70,6 @@ public class Return implements Serializable {
     private int tomm;
 
     @Basic
-    @Max(250)
     @Column(name = "NOTES")
     private String notes;
 

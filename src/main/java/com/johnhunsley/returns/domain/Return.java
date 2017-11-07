@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -66,6 +67,11 @@ public class Return implements Serializable {
     @Basic
     @Column(name = "MIN_TO")
     private int tomm;
+
+    @Basic
+    @Max(250)
+    @Column(name = "NOTES")
+    private String notes;
 
     @OneToMany(mappedBy = "aReturn", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Catch> catches;
@@ -144,6 +150,14 @@ public class Return implements Serializable {
 
     public void setTomm(int tomm) {
         this.tomm = tomm;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public Set<Catch> getCatches() {

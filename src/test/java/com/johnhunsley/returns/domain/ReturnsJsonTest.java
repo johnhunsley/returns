@@ -38,7 +38,7 @@ public class ReturnsJsonTest {
         Date to = DateTime.now().minusDays(1).toDate();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-        final String expected = "{\"class\":\"Return\",\"fishery\":\"Wroxeter\",\"memberId\":\"PP702\",\"name\":\"John Hunsley\",\"from\":\""+df.format(from)+"\",\"fromhh\":13,\"frommm\":0,\"to\":\""+df.format(to)+"\",\"tohh\":22,\"tomm\":30,\"catches\":[{\"class\":\"Catch\",\"species\":\"Barbel\",\"count\":2,\"pounds\":8,\"ounces\":3}]}";
+        final String expected = "{\"class\":\"Return\",\"fishery\":\"Wroxeter\",\"memberId\":\"PP702\",\"name\":\"John Hunsley\",\"from\":\""+df.format(from)+"\",\"fromhh\":13,\"frommm\":0,\"to\":\""+df.format(to)+"\",\"tohh\":22,\"tomm\":30,\"notes\":\"This is some notes\",\"catches\":[{\"class\":\"Catch\",\"species\":\"Barbel\",\"count\":2,\"pounds\":8,\"ounces\":3}]}";
         System.out.println(expected);
         Catch myCatch = new Catch();
         myCatch.setSpecies("Barbel");
@@ -56,6 +56,7 @@ public class ReturnsJsonTest {
         myReturn.setFishery("Wroxeter");
         myReturn.setName("John Hunsley");
         myReturn.setMemberId("PP702");
+        myReturn.setNotes("This is some notes");
         myReturn.addCatch(myCatch);
         System.out.println(tester.write(myReturn).getJson());
         assertTrue(tester.write(myReturn).getJson().toString().equals(expected));

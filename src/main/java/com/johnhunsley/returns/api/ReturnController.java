@@ -1,6 +1,7 @@
 package com.johnhunsley.returns.api;
 
 import com.auth0.spring.security.api.authentication.AuthenticationJsonWebToken;
+import com.johnhunsley.returns.domain.Catch;
 import com.johnhunsley.returns.domain.Return;
 import com.johnhunsley.returns.repository.ReturnsRepositoryJpaImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +33,18 @@ public class ReturnController {
                                                         SecurityContextHolder.getContext().getAuthentication();
         template.setMemberId(jwtClaimsDecoder.resolveMemberId(authentication));
         template.setName(jwtClaimsDecoder.resolveMemberName(authentication));
+
+        //hack to enforce referential integrity
+        for(Catch myCatch : template.getCatches()) {
+            myCatch.setaReturn(template);
+        }
+
         returnsRepository.save(template);
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
-    @PreAuthorize("hasPermission('serviceProvider', 'SERVICE_PROVIDER')")
     public ResponseEntity<Return> getReturnById(@PathVariable("id") final long id) {
         return new ResponseEntity<>(returnsRepository.getOne(id), HttpStatus.OK);
     }

@@ -1,5 +1,8 @@
 package com.johnhunsley.returns.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,20 +14,47 @@ import java.util.Map;
  *         jphunsley@gmail.com
  *         Date : 27/10/2017
  */
-public class ReturnStats {
-    private Map<String, Integer> catchStats;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "class")
+public class ReturnStats implements Comparable {
 
-    public Map<String, Integer> getCatchStats() {
-        return catchStats;
+    private String species;
+
+    private int count;
+
+    public ReturnStats() {}
+
+    public ReturnStats(String species) {
+        this.species = species;
     }
 
-    public void setCatchStats(Map<String, Integer> catchStats) {
-        this.catchStats = catchStats;
+    public ReturnStats(String species, int count) {
+        this.species = species;
+        this.count = count;
     }
 
-    public void addStat(final String type, Integer count) {
-        if(this.catchStats == null) this.catchStats = new HashMap<>();
+    public String getSpecies() {
+        return species;
+    }
 
-        this.catchStats.put(type, count);
+    public void setSpecies(String species) {
+        this.species = species;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        ReturnStats that = (ReturnStats)o;
+        return this.getSpecies().compareTo(that.getSpecies());
     }
 }

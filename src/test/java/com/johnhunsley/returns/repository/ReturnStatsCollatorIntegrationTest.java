@@ -14,6 +14,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -66,16 +68,24 @@ public class ReturnStatsCollatorIntegrationTest {
     }
 
     @Test
-    public void testCollateStats() {
-        ReturnStats stats = returnStatsCollator.collateStats(DateTime.now().minusDays(25).toDate(), DateTime.now().toDate(), "Wroxeter");
-        assertTrue(stats.getCatchStats().keySet().size() == 2);
-        assertTrue(stats.getCatchStats().containsKey("Barbel"));
-        assertTrue(stats.getCatchStats().get("Barbel").equals(10));
-        assertTrue(stats.getCatchStats().containsKey("Chub"));
-        assertTrue(stats.getCatchStats().get("Chub").equals(10));
+    public void testCollateStatsForFishery() {
+        List<ReturnStats> stats = returnStatsCollator.collateStatsForFishery(DateTime.now().minusDays(25).toDate(), DateTime.now().toDate(), "Wroxeter");
+        assertTrue(stats.size() == 2);
 
-        for(String type: stats.getCatchStats().keySet()) {
-            System.out.println(type + ": "+stats.getCatchStats().get(type));
+        for(ReturnStats stat: stats) {
+            System.out.println(stat.getSpecies() + ": "+stat.getCount());
+        }
+    }
+
+    @Test
+    public void testCollateStats() {
+        List<ReturnStats> stats = returnStatsCollator.collateStats(DateTime.now().minusDays(25).toDate(), DateTime.now().toDate());
+        assertTrue(stats.size() == 2);
+
+        for(ReturnStats stat: stats) {
+            System.out.println(stat.getSpecies() + ": "+stat.getCount());
         }
     }
 }
+
+

@@ -5,6 +5,7 @@ import com.johnhunsley.returns.repository.ReturnsRepositoryJpaImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,14 +29,34 @@ public class ReturnStatsCollator {
      * @param fishery
      * @return
      */
-    public ReturnStats collateStats(final Date from, final Date to, final String fishery) {
-        ReturnStats stats = new ReturnStats();
-        List<String> species = returnsRepository.findDistinctSpecies();
+    public List<ReturnStats> collateStatsForFishery(final Date from, final Date to, final String fishery) {
+        List<ReturnStats> stats = new ArrayList<>();
+        List<String> species = returnsRepository.findDistinctSpeciesForFishery(fishery);
 
         for(String type: species) {
-            stats.addStat(type, returnsRepository.getCatchCountForFisheryAndDateRange(from, to, fishery, type));
+            ReturnStats stat = new ReturnStats(type, returnsRepository.getCatchCountForFisheryAndDateRange(from, to, fishery, type));
+            stats.add(stat);
         }
 
         return stats;
     }
+
+    /**
+     *
+     * @param from
+     * @param to
+     * @return
+     */
+    public List<ReturnStats> collateStats(final Date from, final Date to) {
+        List<ReturnStats> stats = new ArrayList<>();
+        List<String> species = returnsRepository.findDistinctSpecies();
+
+        for(String type: species) {
+            ReturnStats stat = new ReturnStats(type, returnsRepository.getCatchCountAndDateRange(from, to, type));
+            stats.add(stat);
+        }
+
+        return stats;
+    }
+
 }

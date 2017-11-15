@@ -46,7 +46,6 @@ public class ReturnController {
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<Return> getReturnById(@PathVariable("id") final long id) {
-        Return myReturn = returnsRepository.findOne(id);
-        return new ResponseEntity<>(myReturn, HttpStatus.OK);
+        return new ResponseEntity<>(returnsRepository.findOne(id), HttpStatus.OK);
     }
 }

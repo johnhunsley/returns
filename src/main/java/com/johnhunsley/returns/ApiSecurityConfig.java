@@ -37,11 +37,11 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
                 .forRS256(apiAudience, issuer)
                 .configure(http)
                 .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/app/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers(HttpMethod.POST, "/app/return").hasAnyRole("CUSTOMER", "SERVICE_PROVIDER")
                 .antMatchers(HttpMethod.GET, "/app/return/**").hasRole("SERVICE_PROVIDER")
-                .antMatchers("/app/returns/").hasRole("SERVICE_PROVIDER")
-                .antMatchers("/app/returns/**").hasRole("SERVICE_PROVIDER")
+                .antMatchers(HttpMethod.GET, "/app/returns/").hasRole("SERVICE_PROVIDER")
+                .antMatchers(HttpMethod.GET, "/app/returns/**").hasRole("SERVICE_PROVIDER")
                 .and()
                     .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -56,7 +56,6 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-
                         .allowedOrigins("*")
                         .allowedMethods("PUT", "DELETE", "GET", "OPTIONS", "POST")
                         .allowCredentials(false).maxAge(3600);

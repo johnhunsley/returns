@@ -34,7 +34,9 @@ public class ReturnStatsCollator {
         List<String> species = returnsRepository.findDistinctSpeciesForFishery(fishery);
 
         for(String type: species) {
-            ReturnStats stat = new ReturnStats(type, returnsRepository.getCatchCountForFisheryAndDateRange(from, to, fishery, type));
+            Integer count = returnsRepository.getCatchCountForFisheryAndDateRange(from, to, fishery, type);
+            if(count == null) count = 0;
+            ReturnStats stat = new ReturnStats(type, count);
             stats.add(stat);
         }
 
@@ -52,7 +54,9 @@ public class ReturnStatsCollator {
         List<String> species = returnsRepository.findDistinctSpecies();
 
         for(String type: species) {
-            ReturnStats stat = new ReturnStats(type, returnsRepository.getCatchCountAndDateRange(from, to, type));
+            Integer count = returnsRepository.getCatchCountAndDateRange(from, to, type);
+            if(count == null) count = 0;
+            ReturnStats stat = new ReturnStats(type, count);
             stats.add(stat);
         }
 

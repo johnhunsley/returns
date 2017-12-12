@@ -2,6 +2,9 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../returns-ui/config/index.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../returns-ui/src/components/BarChart.vue" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../returns-ui/src/components/Stats.vue" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pom.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/johnhunsley/returns/api/PingController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/application.properties" charset="UTF-8" />

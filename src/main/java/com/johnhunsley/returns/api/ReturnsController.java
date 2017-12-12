@@ -77,5 +77,24 @@ public class ReturnsController {
         return new ResponseEntity(stats, HttpStatus.OK);
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "sessions", method = RequestMethod.GET, produces = "Application/json")
+    public ResponseEntity<List<Integer>> getSessionCount(@Valid @Pattern(regexp = VALIDATION_REGEX) @RequestParam("toDate") String toDate,
+                                                         @Valid @Pattern(regexp = VALIDATION_REGEX) @RequestParam("fromDate") String fromDate,
+                                                         @RequestParam("fishery") final String fishery) throws ParseException {
+        Date from = df.parse(fromDate);
+        Date to = df.parse(toDate);
+        List<Integer> stats;
+
+        if(fishery == null || fishery.length() < 1)
+            stats =  returnStatsCollator.countSessionsPerDay(from, to);
+
+        else stats = returnStatsCollator.countSessionsPerDayForFishery(from, to, fishery);
+
+
+        return new ResponseEntity(stats, HttpStatus.OK);
+
+    }
+
 
 }

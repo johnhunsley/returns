@@ -1,5 +1,6 @@
 package com.johnhunsley.returns.service;
 
+import com.johnhunsley.returns.domain.DaySessions;
 import com.johnhunsley.returns.domain.ReturnStats;
 import com.johnhunsley.returns.repository.ReturnsRepositoryJpaImpl;
 import org.joda.time.DateTime;
@@ -75,12 +76,12 @@ public class ReturnsStatsCollatorTest {
     @Test
     public void testCountSessionsPerDay() {
         when(returnsRepository.countReturnsForDateRange(anyObject(), anyObject())).thenReturn(10);
-        List<Integer> sessions = returnStatsCollator.countSessionsPerDay(
+        List<DaySessions> sessions = returnStatsCollator.countSessionsPerDay(
                 DateTime.now().minusDays(9).toDate(), DateTime.now().toDate());
         assertTrue(sessions.size() == 10);
 
-        for(Integer i : sessions) {
-            assertTrue(i == 10);
+        for(DaySessions daySessions : sessions) {
+            assertTrue(daySessions.getCount() == 10);
         }
 
     }

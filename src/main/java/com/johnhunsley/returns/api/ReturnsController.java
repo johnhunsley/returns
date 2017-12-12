@@ -1,6 +1,7 @@
 package com.johnhunsley.returns.api;
 
 import com.auth0.spring.security.api.authentication.AuthenticationJsonWebToken;
+import com.johnhunsley.returns.domain.DaySessions;
 import com.johnhunsley.returns.domain.Return;
 import com.johnhunsley.returns.domain.ReturnStats;
 import com.johnhunsley.returns.repository.ReturnsRepositoryJpaImpl;
@@ -79,12 +80,12 @@ public class ReturnsController {
 
     @CrossOrigin
     @RequestMapping(value = "sessions", method = RequestMethod.GET, produces = "Application/json")
-    public ResponseEntity<List<Integer>> getSessionCount(@Valid @Pattern(regexp = VALIDATION_REGEX) @RequestParam("toDate") String toDate,
+    public ResponseEntity<List<DaySessions>> getSessionCount(@Valid @Pattern(regexp = VALIDATION_REGEX) @RequestParam("toDate") String toDate,
                                                          @Valid @Pattern(regexp = VALIDATION_REGEX) @RequestParam("fromDate") String fromDate,
                                                          @RequestParam("fishery") final String fishery) throws ParseException {
         Date from = df.parse(fromDate);
         Date to = df.parse(toDate);
-        List<Integer> stats;
+        List<DaySessions> stats;
 
         if(fishery == null || fishery.length() < 1)
             stats =  returnStatsCollator.countSessionsPerDay(from, to);

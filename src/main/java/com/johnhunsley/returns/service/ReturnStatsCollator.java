@@ -1,5 +1,6 @@
 package com.johnhunsley.returns.service;
 
+import com.johnhunsley.returns.domain.DaySessions;
 import com.johnhunsley.returns.domain.ReturnStats;
 import com.johnhunsley.returns.repository.ReturnsRepositoryJpaImpl;
 import org.joda.time.DateTime;
@@ -7,6 +8,8 @@ import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +24,8 @@ public class ReturnStatsCollator {
 
     @Autowired
     private ReturnsRepositoryJpaImpl returnsRepository;
+
+    private final DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 
     /**
      * <p>
@@ -73,14 +78,15 @@ public class ReturnStatsCollator {
      * @param to
      * @return
      */
-    public List<Integer> countSessionsPerDay(final Date from, final Date to) {
-        List<Integer> results = new ArrayList<>();
+    public List<DaySessions> countSessionsPerDay(final Date from, final Date to) {
+        List<DaySessions> results = new ArrayList<>();
 
         int count = Days.daysBetween(new DateTime(from).toLocalDate(), new DateTime(to).toLocalDate()).getDays();
 
         for(int i = 0 ; i <= count; i++) {
-            results.add(returnsRepository.countReturnsForDateRange(new DateTime(from).plusDays(i).toDate(),
-                    new DateTime(from).plusDays(i + 1).toDate()));
+            Date begin = (new DateTime(from).plusDays(i).toDate());
+            results.add(new DaySessions(df.format(begin) , returnsRepository.countReturnsForDateRange(begin,
+                    new DateTime(from).plusDays(i + 1).toDate())));
         }
 
         return results;
@@ -94,14 +100,15 @@ public class ReturnStatsCollator {
      * @param to
      * @return
      */
-    public List<Integer> countSessionsPerDayForFishery(final Date from, final Date to, final String fishery) {
-        List<Integer> results = new ArrayList<>();
+    public List<DaySessions> countSessionsPerDayForFishery(final Date from, final Date to, final String fishery) {
+        List<DaySessions> results = new ArrayList<>();
 
         int count = Days.daysBetween(new DateTime(from).toLocalDate(), new DateTime(to).toLocalDate()).getDays();
 
         for(int i = 0 ; i <= count; i++) {
-            results.add(returnsRepository.countReturnsForDateRangeAndFishery(new DateTime(from).plusDays(i).toDate(),
-                    new DateTime(from).plusDays(i+1).toDate(), fishery));
+            Date begin = (new DateTime(from).plusDays(i).toDate());
+            results.add(new DaySessions(df.format(begin), returnsRepository.countReturnsForDateRangeAndFishery(begin,
+                    new DateTime(from).plusDays(i + 1).toDate(), fishery)));
         }
 
         return results;

@@ -42,9 +42,9 @@ public interface ReturnsRepositoryJpaImpl extends JpaRepository<Return, Long> {
     @Query("select SUM(c.count) from Catch c where c.species = :species and c.aReturn in (select r from Return r where r.from >= :fromdate and r.to <= :todate)")
     Integer getCatchCountAndDateRange(@Param("fromdate") Date from, @Param("todate") Date to, @Param("species") String species);
 
-    @Query("select COUNT(r) from Return r where r.from >= :fromdate and r.to <= :todate")
+    @Query("select COUNT(r) from Return r where r.from >= :fromdate and r.to < :todate")
     Integer countReturnsForDateRange(@Param("fromdate") Date from, @Param("todate") Date to);
 
-    @Query("select COUNT(r) from Return r where r.from >= :fromdate and r.to <= :todate and r.fishery = :fishery")
+    @Query("select COUNT(r) from Return r where r.from >= :fromdate and r.to < :todate and r.fishery = :fishery")
     Integer countReturnsForDateRangeAndFishery(@Param("fromdate") Date from, @Param("todate") Date to, @Param("fishery") String fishery);
 }

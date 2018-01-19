@@ -6,10 +6,14 @@ import com.johnhunsley.returns.repository.ReturnsRepositoryJpaImpl;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +32,8 @@ import static org.junit.Assert.assertTrue;
  *         Time : 18:37
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@DataJpaTest
+@Transactional(propagation = Propagation.NOT_SUPPORTED)
 public class ReturnsStatsCollatorTest {
 
     private static final List<String> DISTINCT_SPECIES = new ArrayList<>();

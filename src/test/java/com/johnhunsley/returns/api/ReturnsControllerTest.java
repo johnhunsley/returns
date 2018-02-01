@@ -2,6 +2,7 @@ package com.johnhunsley.returns.api;
 
 import com.johnhunsley.returns.domain.Catch;
 import com.johnhunsley.returns.domain.Return;
+import com.johnhunsley.returns.repository.LookupRepositoryJpaImpl;
 import com.johnhunsley.returns.repository.ReturnsRepositoryJpaImpl;
 import com.johnhunsley.returns.service.ReturnStatsCollator;
 import org.joda.time.DateTime;
@@ -43,6 +44,9 @@ public class ReturnsControllerTest {
 
     @MockBean
     private ReturnsRepositoryJpaImpl returnsRepository;
+
+    @MockBean
+    private LookupRepositoryJpaImpl lookupRepository;
 
     @MockBean
     private ReturnStatsCollator returnStatsCollator;

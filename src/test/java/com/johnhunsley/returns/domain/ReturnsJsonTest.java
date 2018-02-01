@@ -1,5 +1,6 @@
 package com.johnhunsley.returns.domain;
 
+import com.johnhunsley.returns.repository.LookupRepositoryJpaImpl;
 import com.johnhunsley.returns.repository.ReturnsRepositoryJpaImpl;
 import org.joda.time.DateTime;
 import org.junit.Test;
@@ -31,6 +32,9 @@ public class ReturnsJsonTest {
 
     @MockBean
     private ReturnsRepositoryJpaImpl returnsRepository;
+
+    @MockBean
+    private LookupRepositoryJpaImpl lookupRepository;
 
     @Test
     public void testSerialize() throws Exception {

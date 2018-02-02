@@ -16,6 +16,6 @@ import java.util.List;
 @Repository("lookupRepository")
 public interface LookupRepositoryJpaImpl extends JpaRepository<Lookup, Long> {
 
-    @Query("select l from Lookup l where l.lookupType = :lookupType order by l.lookupValue desc")
+    @Query("select l from Lookup l where l.lookupType = :lookupType order by l.lookupValue asc")
     List<Lookup> findLookupsByType(@Param("lookupType") String lookupType);
 }

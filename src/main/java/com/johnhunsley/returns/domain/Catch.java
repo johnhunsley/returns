@@ -18,7 +18,7 @@ import java.io.Serializable;
         include = JsonTypeInfo.As.PROPERTY,
         property = "class")
 @Entity
-@Table(name = "CATCHES", catalog = "lymmac", schema = "")
+@Table(name = "CATCHES")//catalog = "lymmac", schema = ""
 public class Catch implements Serializable {
     private static final long serialVersionUID = 100L;
 

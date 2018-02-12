@@ -21,7 +21,7 @@ import java.io.Serializable;
         include = JsonTypeInfo.As.PROPERTY,
         property = "class")
 @Entity
-@Table(name = "LOOKUP", catalog = "lymmac", schema = "")
+@Table(name = "LOOKUP") //, catalog = "lymmac", schema = ""
 public class Lookup implements Serializable {
     private static final long serialVersionUID = 100L;
 

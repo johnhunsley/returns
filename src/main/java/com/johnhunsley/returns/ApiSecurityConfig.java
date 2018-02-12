@@ -42,7 +42,7 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/app/return/**").hasRole("SERVICE_PROVIDER")
                 .antMatchers(HttpMethod.GET, "/app/returns/").hasRole("SERVICE_PROVIDER")
                 .antMatchers(HttpMethod.GET, "/app/returns/**").hasRole("SERVICE_PROVIDER")
-//                .antMatchers(HttpMethod.GET, "/app/lookup/**").hasAnyRole("CUSTOMER", "SERVICE_PROVIDER")
+                .antMatchers(HttpMethod.GET, "/app/lookup/**").hasAnyRole("CUSTOMER", "SERVICE_PROVIDER")
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

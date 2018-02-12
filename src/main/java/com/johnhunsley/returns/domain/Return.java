@@ -22,7 +22,7 @@ import java.util.Set;
         include = JsonTypeInfo.As.PROPERTY,
         property = "class")
 @Entity
-@Table(name = "RETURNS") //, catalog = "lymmac", schema = ""
+@Table(name = "RETURNS")
 public class Return implements Serializable {
     private static final long serialVersionUID = 100L;
 

@@ -12,4 +12,9 @@ deployment:
   staging:
     branch: master
     heroku:
-      appname: lymm-returns-api
+      appname: lymm-returns-api-dev
+
+  release:
+      tag: /v[0-9]+(\.[0-9]+)*/
+      heroku:
+        appname: lymm-returns-api

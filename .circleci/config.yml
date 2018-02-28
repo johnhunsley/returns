@@ -12,7 +12,8 @@ jobs:
           CIRCLE_TEST_REPORTS: target/circleci-test-results
 
     docker:
-      - image: circleci/openjdk:8-jdk-browsers
+      - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
+      #- image: circleci/openjdk:8-jdk-browsers
         command: /sbin/init
 
     steps:

@@ -32,7 +32,7 @@ jobs:
           path: ~/johnhunsley/returns/target/
 
       - save_cache:
-          key: returns-{{.Environment.CIRCLE_SHA1}}
+          key: returns-assests-{{.Environment.CIRCLE_SHA1}}
           paths:
             - ~/johnhunsley/returns/target/*.jar
 
@@ -44,13 +44,18 @@ jobs:
     environment:
       - HEROKU_APP: lymm-returns-api-dev
     steps:
-      - run: mkdir .circleci/
+      - run:
+        name: Setup heroku cache
+        command: |
+           mkdir .circleci/
+           chmod -R 777 .circleci/
+
       - restore_cache:
           keys:
             - deploy-script-{{.Environment.CIRCLE_SHA1}}
       - restore_cache:
           keys:
-            - returns-{{.Environment.CIRCLE_SHA1}}
+            - returns-assests-{{.Environment.CIRCLE_SHA1}}
       - run:
           name: Setup Heroku
           command: bash .circleci/setup-heroku.sh

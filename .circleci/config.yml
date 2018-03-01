@@ -7,10 +7,6 @@ jobs:
 
     shell: /bin/bash --login
 
-#    environment:
-#          CIRCLE_ARTIFACTS: target/circleci-artifacts
-#          CIRCLE_TEST_REPORTS: target/circleci-test-results
-
     docker:
       - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
         command: /sbin/init
@@ -51,10 +47,10 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - deploy-script-{{.Environment.CIRCLE_SHA1}}}
+            - deploy-script-{{.Environment.CIRCLE_SHA1}}
       - restore_cache:
           keys:
-            - returns-{{.Environment.CIRCLE_SHA1}}}
+            - returns-{{.Environment.CIRCLE_SHA1}}
       - run:
           name: Setup Heroku
           command: bash .circleci/setup-heroku.sh

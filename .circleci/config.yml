@@ -22,7 +22,7 @@ jobs:
 
       - run: pwd
 
-      - run: ls -l ~
+      - run: ls -l
 
 #      - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
 
@@ -49,7 +49,7 @@ jobs:
       - run: mvn clean package
 
       - store_artifacts:
-          path: ~/johnhunsley/returns/target/
+          path: ~/johnhunsley/returns/target/*.jar
 
 
 #  deploy:

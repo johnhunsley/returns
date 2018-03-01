@@ -17,15 +17,11 @@ jobs:
 
     steps:
       - checkout
-#
-##      - run: echo $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
-#
-#      - run: pwd
-#
-#      - run: ls -l .circleci/
-#
-##      - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
 
+      - save_cache:
+          key: deploy-script-{{.Environment.CIRCLE_SHA1}}
+          paths:
+             - ~/johnhunsley/returns/.circleci/setup-heroku.sh
 
       - run: mvn dependency:go-offline
 
@@ -33,11 +29,6 @@ jobs:
 
       - store_test_results:
           path: ~/johnhunsley/returns/target/surefire-reports/
-
-
-#      - run: mkdir -p $CIRCLE_TEST_REPORTS/junit/
-#
-#      - run: find . -type f -regex ".*/$CIRCLE_TEST_REPORTS/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
 
       - run: mvn clean package
 
@@ -58,6 +49,9 @@ jobs:
       # todo different envs for different branches / tags
       - HEROKU_APP: lymm-returns-api-dev
     steps:
+      - restore_cache:
+          keys:
+            - deploy-script-{{.Environment.CIRCLE_SHA1}}}
       - restore_cache:
           keys:
             - returns-{{.Environment.CIRCLE_SHA1}}}

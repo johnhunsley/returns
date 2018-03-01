@@ -42,9 +42,9 @@ jobs:
         enabled: true
     working_directory: ~/johnhunsley/returns
     environment:
-      # todo different envs for different branches / tags
       - HEROKU_APP: lymm-returns-api-dev
     steps:
+      - run: mkdir .circleci/
       - restore_cache:
           keys:
             - deploy-script-{{.Environment.CIRCLE_SHA1}}
@@ -54,9 +54,14 @@ jobs:
       - run:
           name: Setup Heroku
           command: bash .circleci/setup-heroku.sh
+
+      - run: echo "deploying from branch - " + ${CIRCLE_BRANCH}
+
       - run:
           command: |
-            git push heroku returns:master
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              git push heroku returns:master
+            fi
 
 workflows:
   version: 2

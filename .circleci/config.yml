@@ -38,8 +38,9 @@ jobs:
 
 
   deploy:
-    machine:
-        enabled: true
+    docker:
+      - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
+      command: /sbin/init
     working_directory: ~/johnhunsley/returns
     environment:
       - HEROKU_APP: lymm-returns-api-dev

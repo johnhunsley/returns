@@ -14,6 +14,7 @@ jobs:
     steps:
       - checkout
 
+      # Cache the heroku set up script for the deploy job
       - save_cache:
           key: deploy-script-{{.Environment.CIRCLE_SHA1}}
           paths:
@@ -21,16 +22,21 @@ jobs:
 
       - run: mvn dependency:go-offline
 
+      # Run integration tests
       - run: mvn integration-test
 
+      # Store the surefire tests
       - store_test_results:
           path: ~/johnhunsley/returns/target/surefire-reports/
 
+      # runt he actual build
       - run: mvn clean package
 
+      # Store the artifacts
       - store_artifacts:
           path: ~/johnhunsley/returns/target/
 
+      # cache the build artifacts for the deploy job
       - save_cache:
           key: returns-assests-{{.Environment.CIRCLE_SHA1}}
           paths:
@@ -38,29 +44,42 @@ jobs:
 
 
   deploy:
+
+    #Ensure we have the same image otherwise we can't unzip the cached objects
     docker:
       - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
         command: /sbin/init
+
     working_directory: ~/johnhunsley/returns
+
+    #Set the Heroku app name we want to deploy to
     environment:
       - HEROKU_APP: lymm-returns-api-dev
-    steps:
-      - run:
-          name: Setup heroku cache
-          command: |
-            mkdir .circleci/
-            chmod -R 777 .circleci/
 
+    steps:
+
+#      - run:
+#          name: Setup heroku cache
+#          command: |
+#            mkdir .circleci/
+#            chmod -R 777 .circleci/
+
+      # Get the cached deploy script
       - restore_cache:
           keys:
             - deploy-script-{{.Environment.CIRCLE_SHA1}}
+
+      # Get the cached artifacts from the build job
       - restore_cache:
           keys:
             - returns-assests-{{.Environment.CIRCLE_SHA1}}
+
+      # Run the heroku script
       - run:
           name: Setup Heroku
           command: bash .circleci/setup-heroku.sh
 
+      # echo which branch we're deploying from
       - run: echo "deploying from branch - " + ${CIRCLE_BRANCH}
 
       - run:
@@ -69,6 +88,7 @@ jobs:
               git push heroku returns:master
             fi
 
+# build and deploy
 workflows:
   version: 2
   build-and-deploy:

@@ -42,7 +42,7 @@ jobs:
           path: $CIRCLE_ARTIFACTS/
 
       - store_test_results:
-          path: $$CIRCLE_TEST_REPORTS/
+          path: $CIRCLE_TEST_REPORTS/
 
    deploy:
       machine:

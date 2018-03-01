@@ -22,7 +22,7 @@ jobs:
 
       - run: pwd
 
-      - run: ls -l
+      - run: ls -l ../
 
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
 
@@ -45,10 +45,10 @@ jobs:
       - run: mvn clean package
 
       - store_artifacts:
-          path: ~/johnhunsley/reutrns/target/
+          path: ~/johnhunsley/returns/target/
 
       - store_test_results:
-          path: ~/johnhunsley/reutrns/target/surefire-reports/
+          path: ~/johnhunsley/returns/target/surefire-reports/
 
 #  deploy:
 #    machine:

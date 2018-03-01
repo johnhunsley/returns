@@ -45,10 +45,10 @@ jobs:
       - HEROKU_APP: lymm-returns-api-dev
     steps:
       - run:
-        name: Setup heroku cache
-        command: |
-           mkdir .circleci/
-           chmod -R 777 .circleci/
+          name: Setup heroku cache
+          command: |
+            mkdir .circleci/
+            chmod -R 777 .circleci/
 
       - restore_cache:
           keys:

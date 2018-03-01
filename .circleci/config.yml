@@ -42,12 +42,12 @@ jobs:
       - run: mvn clean package
 
       - store_artifacts:
-          path: ~/johnhunsley/returns/target/
+        path: ~/johnhunsley/returns/target/
 
-       - save_cache:
-          key: returns-{{.Environment.CIRCLE_SHA1}}
-           paths:
-             - ~/johnhunsley/returns/target/*.jar
+      - save_cache:
+        key: returns-{{.Environment.CIRCLE_SHA1}}
+        paths:
+          - ~/johnhunsley/returns/target/*.jar
 
 
   deploy:

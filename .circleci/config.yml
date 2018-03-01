@@ -49,13 +49,13 @@ jobs:
       - run: mvn clean package
 
       - store_artifacts:
-          path: ~/johnhunsley/returns/target/*.jar
+          path: ~/johnhunsley/returns/target/
 
 
   deploy:
     machine:
         enabled: true
-    working_directory: ~/johnhunsley/returns/target
+    working_directory: ~/johnhunsley/returns
     environment:
       # todo different envs for different branches / tags
       - HEROKU_APP: lymm-returns-api-dev
@@ -68,9 +68,10 @@ jobs:
             - v1-assets-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Setup Heroku
-          command: bash ./../.circleci/setup-heroku.sh
+          command: bash .circleci/setup-heroku.sh
       - run:
           command: |
+            cd target/
             git push heroku returns:master
 
 workflows:

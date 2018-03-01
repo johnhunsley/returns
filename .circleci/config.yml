@@ -7,9 +7,9 @@ jobs:
 
     shell: /bin/bash --login
 
-    environment:
-          CIRCLE_ARTIFACTS: target/circleci-artifacts
-          CIRCLE_TEST_REPORTS: target/circleci-test-results
+#    environment:
+#          CIRCLE_ARTIFACTS: target/circleci-artifacts
+#          CIRCLE_TEST_REPORTS: target/circleci-test-results
 
     docker:
       - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
@@ -18,13 +18,13 @@ jobs:
     steps:
       - checkout
 
-      - run: echo $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
+#      - run: echo $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
 
       - run: pwd
 
-      - run: ls -l ../
+      - run: ls -l ~
 
-      - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
+#      - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
 
       - restore_cache:
           key: returns-{{ checksum "pom.xml" }}
@@ -38,17 +38,19 @@ jobs:
 
       - run: mvn integration-test
 
-      - run: mkdir -p $CIRCLE_TEST_REPORTS/junit/
+      - store_test_results:
+          path: ~/johnhunsley/returns/target/surefire-reports/
 
-      - run: find . -type f -regex ".*/$CIRCLE_TEST_REPORTS/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+
+#      - run: mkdir -p $CIRCLE_TEST_REPORTS/junit/
+#
+#      - run: find . -type f -regex ".*/$CIRCLE_TEST_REPORTS/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
 
       - run: mvn clean package
 
       - store_artifacts:
           path: ~/johnhunsley/returns/target/
 
-      - store_test_results:
-          path: ~/johnhunsley/returns/target/surefire-reports/
 
 #  deploy:
 #    machine:

@@ -52,32 +52,32 @@ jobs:
           path: ~/johnhunsley/returns/target/*.jar
 
 
-#  deploy:
-#    machine:
-#        enabled: true
-#    working_directory: ~/johnhunsley/returns/target
-#    environment:
-#      # todo different envs for different branches / tags
-#      - HEROKU_APP: lymm-returns-api-dev
-#    steps:
-#      - restore_cache:
-#          keys:
-#            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-#      - restore_cache:
-#          keys:
-#            - v1-assets-{{ .Environment.CIRCLE_SHA1 }}
-#      - run:
-#          name: Setup Heroku
-#          command: bash ../circleci/setup-heroku.sh
-#      - run:
-#          command: |
-#            git push heroku returns:master
-#
-#workflows:
-#  version: 2
-#  build-and-deploy:
-#    jobs:
-#      - build
-#      - deploy:
-#          requires:
-#            - build
+  deploy:
+    machine:
+        enabled: true
+    working_directory: ~/johnhunsley/returns/target
+    environment:
+      # todo different envs for different branches / tags
+      - HEROKU_APP: lymm-returns-api-dev
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - v1-assets-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Setup Heroku
+          command: bash .circleci/setup-heroku.sh
+      - run:
+          command: |
+            git push heroku returns:master
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build

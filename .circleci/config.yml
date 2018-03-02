@@ -68,16 +68,12 @@ jobs:
           keys:
             - returns-assests-{{.Environment.CIRCLE_SHA1}}
 
-      - run:
-          name: list directory contents
-          command: bash ls -l
-
       # Run the heroku script
       - run:
           name: Setup Heroku
           command: bash .circleci/setup-heroku.sh
 
-      # echo which branch we're deploying from
+      # echo which returns app source branch we're deploying from
       - run:
           name: Log git deployment branch
           command: echo "deploying from branch - " + ${CIRCLE_BRANCH}

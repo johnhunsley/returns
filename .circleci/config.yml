@@ -58,12 +58,6 @@ jobs:
 
     steps:
 
-#      - run:
-#          name: Setup heroku cache
-#          command: |
-#            mkdir .circleci/
-#            chmod -R 777 .circleci/
-
       # Get the cached deploy script
       - restore_cache:
           keys:
@@ -80,12 +74,15 @@ jobs:
           command: bash .circleci/setup-heroku.sh
 
       # echo which branch we're deploying from
-      - run: echo "deploying from branch - " + ${CIRCLE_BRANCH}
+      - run:
+          name: Log git deployment branch
+          command: echo "deploying from branch - " + ${CIRCLE_BRANCH}
 
       - run:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              git push heroku returns:master
+              git push heroku master
+              heroku restart
             fi
 
 # build and deploy

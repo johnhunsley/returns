@@ -82,6 +82,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               cd target/
               git init
+              git config --global user.email "jphunsley@gmail.com"
+              git config --global user.name "John Hunsley"
               git add *.jar
               git commit -m "committing executable artifact..."
               git push heroku master

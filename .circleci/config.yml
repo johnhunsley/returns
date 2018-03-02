@@ -85,6 +85,7 @@ jobs:
               git init
               git add *.jar
               git commit -m "committing executable artifact..."
+              heroku auth:token
               heroku git:remote -a $HEROKU_APP
               git push heroku master
               sleep 5

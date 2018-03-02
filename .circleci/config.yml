@@ -84,6 +84,8 @@ jobs:
               cd target/
               git init
               heroku git:remote -a $HEROKU_APP
+              git config user.email "jphunsley@gmail.com"
+               git config user.name "John Hunsley"
               git add *.jar
               git commit -m "committing executable artifact..."
               git push heroku master

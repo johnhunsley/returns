@@ -83,6 +83,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               cd target/
               git init
+              git add *.jar
+              git commit -m "committing executable artifact..."
               git push heroku master
               sleep 5
               heroku restart

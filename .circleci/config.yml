@@ -68,6 +68,10 @@ jobs:
           keys:
             - returns-assests-{{.Environment.CIRCLE_SHA1}}
 
+      - run:
+          name: list directory contents
+          command: bash ls -l
+
       # Run the heroku script
       - run:
           name: Setup Heroku
@@ -83,6 +87,7 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               git init
               git push heroku master
+              sleep 5
               heroku restart
             fi
 

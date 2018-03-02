@@ -11,6 +11,8 @@ machine git.heroku.com
   password $HEROKU_API_KEY
 EOF
 
+heroku git:remote -a $HEROKU_APP
+
 
 #wget https://cli-assets.heroku.com/branches/stable/heroku-linux-amd64.tar.gz
 #sudo mkdir -p /usr/local/lib /usr/local/bin

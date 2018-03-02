@@ -57,6 +57,7 @@ jobs:
       - HEROKU_APP: lymm-returns-api-dev
 
     steps:
+
       # Get the cached deploy script
       - restore_cache:
           keys:
@@ -80,6 +81,7 @@ jobs:
       - run:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              git init
               git push heroku master
               heroku restart
             fi

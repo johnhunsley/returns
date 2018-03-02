@@ -81,6 +81,7 @@ jobs:
       - run:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              heroku git:remote -a $HEROKU_APP
               cd target/
               git init
               git config --global user.email "jphunsley@gmail.com"

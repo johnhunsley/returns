@@ -40,7 +40,7 @@ jobs:
       - save_cache:
           key: returns-assests-{{.Environment.CIRCLE_SHA1}}
           paths:
-            - ~/johnhunsley/returns/target/*.jar
+            - ~/johnhunsley/returns/target/
 
 
   deploy:

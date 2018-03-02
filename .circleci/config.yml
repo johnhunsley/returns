@@ -84,10 +84,6 @@ jobs:
               cd target/
               git init
               heroku git:remote -a $HEROKU_APP
-#              git config --global user.email "jphunsley@gmail.com"
-#              git config --global user.name "John Hunsley"
-#              git add *.jar
-#              git commit -m "committing executable artifact..."
               git push heroku master
               sleep 5
               heroku restart

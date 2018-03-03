@@ -82,11 +82,11 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               cd target/
+              heroku auth:token
+              heroku git:remote -a $HEROKU_APP
               git init
               git add *.jar
               git commit -m "committing executable artifact..."
-              heroku auth:token
-              heroku git:remote -a $HEROKU_APP
               git push heroku master
               sleep 5
               heroku restart
